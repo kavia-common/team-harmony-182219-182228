@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import NavBar from "@/components/NavBar";
 import Container from "@/components/Container";
-import { AppProvider } from "@/state/store";
+import ClientLayout from "@/components/ClientLayout";
 
 export const metadata: Metadata = {
   title: "TeamSync – Discover better team activities",
@@ -28,14 +28,14 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className="min-h-screen bg-gray-50">
-        <AppProvider>
+        <ClientLayout>
           <div className="relative min-h-screen bg-gradient-to-b from-blue-500/10 to-gray-50">
             <NavBar />
             <Container>
               <main className="py-8">{children}</main>
             </Container>
           </div>
-        </AppProvider>
+        </ClientLayout>
       </body>
     </html>
   );

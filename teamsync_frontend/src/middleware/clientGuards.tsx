@@ -2,8 +2,8 @@
 
 import React from "react";
 import Link from "next/link";
-import { useAppSelector } from "../state/store";
-import { selectHasOnboarded, selectHasCompletedQuiz } from "../state/selectors";
+import { useAppSelector } from "@/state/store";
+import { selectHasOnboarded, selectHasCompletedQuiz } from "@/state/selectors";
 
 /**
  * PUBLIC_INTERFACE
