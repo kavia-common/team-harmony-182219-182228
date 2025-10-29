@@ -70,3 +70,13 @@ function filterRecommendations(
     return personaOk && sizeOk && modeOk;
   });
 }
+
+// PUBLIC_INTERFACE
+export function selectTeam(state: AppState) {
+  /**
+   * Returns a simplified team object for compatibility with UI code:
+   * { size, workMode }
+   */
+  const { teamSize, workMode } = state.onboarding;
+  return { size: teamSize, workMode };
+}

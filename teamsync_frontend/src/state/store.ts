@@ -135,7 +135,7 @@ function reducer(state: AppState, action: AppAction): AppState {
 
 type AppContextValue = {
   state: AppState;
-  dispatch: React.Dispatch<AppAction>;
+  dispatch: React.Dispatch<AppAction | { type: "saved/add"; payload: Recommendation }>;
 };
 
 // Use a non-generic createContext call and cast after to avoid TS parser/generic issues in some environments.
@@ -147,10 +147,20 @@ const AppStateContext = createContext(undefined as unknown as AppContextValue);
  */
 export function AppProvider(props: AppProviderProps) {
   const { children } = props;
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const [state, baseDispatch] = useReducer(reducer, initialState);
 
-  // Note: dispatch from useReducer is stable; include only state to avoid TS parse issues in some setups.
-  const value = useMemo<AppContextValue>(() => ({ state, dispatch }), [state]);
+  // Provide a small wrapper to accept "saved/add" from UI and convert to toggle
+  const dispatch = useMemo(() => {
+    return (action: AppAction | { type: "saved/add"; payload: Recommendation }) => {
+      if (action.type === "saved/add") {
+        baseDispatch({ type: "recs/toggleSaved", payload: { id: action.payload.id } });
+        return;
+      }
+      baseDispatch(action as AppAction);
+    };
+  }, []);
+
+  const value = useMemo<AppContextValue>(() => ({ state, dispatch }), [state, dispatch]);
 
   return React.createElement(
     AppStateContext.Provider,
@@ -161,7 +171,7 @@ export function AppProvider(props: AppProviderProps) {
 
 /**
  * PUBLIC_INTERFACE
- * Hook to access the global state.
+ * Hook that returns the whole app state object.
  */
 export function useAppState() {
   const ctx = useContext(AppStateContext);
@@ -169,6 +179,15 @@ export function useAppState() {
     throw new Error("useAppState must be used within AppProvider");
   }
   return ctx.state;
+}
+
+/**
+ * PUBLIC_INTERFACE
+ * Hook to access a selected slice of the global state.
+ */
+export function useAppSelector<T>(selector: (s: AppState) => T): T {
+  const state = useAppState();
+  return selector(state);
 }
 
 /**
@@ -182,3 +201,10 @@ export function useAppDispatch() {
   }
   return ctx.dispatch;
 }
+
+// PUBLIC_INTERFACE
+// Convenience action creator used by /recommendations page
+export const addSavedRecommendation = (item: Recommendation) => ({
+  type: "saved/add" as const,
+  payload: item,
+});
