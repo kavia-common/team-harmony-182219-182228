@@ -2,7 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
-import { useAppDispatch, useAppSelector } from "@/state/store";
+import { useAppDispatch, useAppSelector, useResetApp, useIsHydrated } from "@/state/store";
 import { selectSavedRecommendations } from "@/state/selectors";
 import { Button } from "@/components/ui/Button";
 
@@ -15,6 +15,8 @@ import { Button } from "@/components/ui/Button";
 export default function SavedList() {
   const saved = useAppSelector(selectSavedRecommendations);
   const dispatch = useAppDispatch();
+  const resetApp = useResetApp();
+  const isHydrated = useIsHydrated();
 
   const handleRemove = (id: string) => {
     dispatch({ type: "recs/toggleSaved", payload: { id } });
@@ -45,7 +47,19 @@ export default function SavedList() {
     <div className="p-5 bg-white border border-gray-100 rounded-2xl shadow-sm">
       <div className="flex items-center justify-between mb-4">
         <h3 className="text-lg font-semibold text-[#111827]">Saved picks</h3>
-        <span className="text-sm text-gray-500">{saved.length} saved</span>
+        <div className="flex items-center gap-3">
+          <span className="text-sm text-gray-500">{saved.length} saved</span>
+          <Button
+            variant="ghost"
+            className="text-gray-600 hover:text-gray-900"
+            onClick={resetApp}
+            disabled={!isHydrated}
+            aria-label="Reset saved state"
+            title="Clear saved picks and quiz/onboarding state"
+          >
+            Reset
+          </Button>
+        </div>
       </div>
       <ul className="divide-y divide-gray-100">
         {saved.map((item) => (
