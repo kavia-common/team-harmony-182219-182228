@@ -8,3 +8,14 @@ export function renderWithProviders(ui: React.ReactElement, options?: Parameters
   const Wrapper = ({ children }: PropsWithChildren) => <AppProvider>{children}</AppProvider>;
   return render(ui, { wrapper: Wrapper, ...options });
 }
+
+// PUBLIC_INTERFACE
+export function mockNextNavigation() {
+  /**
+   * This helper previously wrapped vi.mock for next/navigation.
+   * The project now centralizes this mock in vitest.setup.ts.
+   * We expose a no-op function to maintain backward compatibility
+   * with suites that call mockNextNavigation().
+   */
+  // no-op on purpose; centralized mock is applied in vitest.setup.ts
+}

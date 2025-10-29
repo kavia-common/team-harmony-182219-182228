@@ -1,8 +1,6 @@
 import { screen } from "@testing-library/react";
 import DashboardPage from "./page";
-import { renderWithProviders, mockNextNavigation } from "@/test/test-utils";
-
-mockNextNavigation();
+import { renderWithProviders } from "@/test/test-utils";
 
 describe("Dashboard route", () => {
   it("renders headings and key sections (smoke)", () => {
