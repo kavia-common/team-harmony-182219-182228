@@ -80,3 +80,10 @@ export function selectTeam(state: AppState) {
   const { teamSize, workMode } = state.onboarding;
   return { size: teamSize, workMode };
 }
+
+// PUBLIC_INTERFACE
+export function selectTeamStats(state: AppState) {
+  /** Return a normalized team stats object for dashboard. */
+  const { teamSize, workMode } = state.onboarding;
+  return { size: teamSize ?? undefined, workMode: workMode ?? undefined };
+}
