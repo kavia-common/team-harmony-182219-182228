@@ -11,16 +11,20 @@ import {
   selectTeam,
 } from "@/state/selectors";
 import { Button } from "@/components/ui/Button";
+import { useClientGuard } from "@/middleware/clientGuards";
 
 /**
  * PUBLIC_INTERFACE
- * DashboardPage
- * Renders persona insights, team stats, saved items, and CTA to explore.
- * Responsive two-column layout (stacks on mobile).
+ * DashboardPage with inline guard alerts and improved headings.
  */
 export default function DashboardPage() {
   const { persona, confidence } = useAppSelector(selectPersona);
   const team = useAppSelector(selectTeam);
+
+  const { guardSatisfied, guardNotice } = useClientGuard({
+    requireOnboard: true,
+    requireQuiz: false,
+  });
 
   const personaSummary = useMemo(
     () => ({
@@ -49,14 +53,16 @@ export default function DashboardPage() {
 
   return (
     <Container>
-      <div className="mb-8">
+      <header className="mb-6">
         <h1 className="text-3xl font-bold text-[#111827]">Team Dashboard</h1>
         <p className="text-gray-600 mt-1">
           A quick snapshot of your team profile and saved picks.
         </p>
-      </div>
+      </header>
 
-      <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
+      {guardNotice}
+
+      <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 transition-opacity duration-200" style={{ opacity: guardSatisfied ? 1 : 0.6 }}>
         <div className="lg:col-span-3">
           <Insights persona={personaSummary} teamStats={teamStats} />
           <div className="mt-6">

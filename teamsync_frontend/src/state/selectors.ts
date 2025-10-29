@@ -71,6 +71,25 @@ function filterRecommendations(
   });
 }
 
+/**
+ * PUBLIC_INTERFACE
+ * Returns true when onboarding is sufficiently completed for guarded pages.
+ */
+export function selectHasOnboarded(state: AppState): boolean {
+  const ob = state.onboarding;
+  // consider completed or presence of key fields as sufficient
+  return Boolean(ob.completed || (ob.teamSize != null && ob.workMode != null));
+}
+
+/**
+ * PUBLIC_INTERFACE
+ * Returns true when at least one quiz answer exists and a persona has been derived.
+ */
+export function selectHasCompletedQuiz(state: AppState): boolean {
+  const hasAnswers = Object.keys(state.quiz.answers ?? {}).length > 0;
+  return Boolean(state.result.persona) || hasAnswers;
+}
+
 // PUBLIC_INTERFACE
 export function selectTeam(state: AppState) {
   /**
