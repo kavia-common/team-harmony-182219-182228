@@ -2,13 +2,12 @@ import type { NextConfig } from "next";
 
 /**
  * Next.js configuration
- * Note:
- * - Using default server output to ensure all app routes (/quiz, /dashboard, etc.)
- *   are included in the production build. Static export can omit app routes that
- *   rely on client features and dynamic navigation.
+ * Keep default server output; do not force `output: "export"`.
+ * This supports the dev server and app router features in preview.
  */
 const nextConfig: NextConfig = {
-  // Keep default output (server). Do not set `output: "export"`.
+  reactStrictMode: true,
+  // Do not set output: "export"
 };
 
 export default nextConfig;

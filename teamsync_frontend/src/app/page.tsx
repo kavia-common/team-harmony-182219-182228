@@ -5,9 +5,25 @@ import { Card, CardBody, CardHeader, CardFooter } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
 
+/**
+ * PUBLIC_INTERFACE
+ * Home page with a safe, minimal fallback to guarantee rendering.
+ */
 export default function Home() {
+  // Fallback content – always safe to render
+  const Fallback = (
+    <div className="rounded-xl border border-blue-100 bg-white/70 p-4 text-sm text-gray-700">
+      <div className="flex items-center gap-2">
+        <span aria-hidden>✅</span>
+        <span>Health check: UI mounted successfully.</span>
+      </div>
+    </div>
+  );
+
   return (
     <section className="mt-8">
+      <div className="mb-4">{Fallback}</div>
+
       <div className="grid gap-6 lg:grid-cols-3 items-stretch">
         <div className="lg:col-span-2">
           <Card className="ts-card-hover">

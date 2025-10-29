@@ -1,9 +1,11 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
-import NavBar from "@/components/NavBar";
-import Container from "@/components/Container";
 import ClientLayout from "@/components/ClientLayout";
 
+/**
+ * RootLayout is a server component by default. It renders ClientLayout inside the body
+ * to keep AppProvider and hook-using components within a client boundary.
+ */
 export const metadata: Metadata = {
   title: "TeamSync – Discover better team activities",
   description:
@@ -28,14 +30,8 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className="min-h-screen bg-gray-50">
-        <ClientLayout>
-          <div className="relative min-h-screen bg-gradient-to-b from-blue-500/10 to-gray-50">
-            <NavBar />
-            <Container>
-              <main className="py-8">{children}</main>
-            </Container>
-          </div>
-        </ClientLayout>
+        {/* Keep client-only elements inside ClientLayout */}
+        <ClientLayout>{children}</ClientLayout>
       </body>
     </html>
   );
