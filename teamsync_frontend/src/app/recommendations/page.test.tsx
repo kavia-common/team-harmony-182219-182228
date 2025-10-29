@@ -1,9 +1,6 @@
 import { screen, fireEvent } from "@testing-library/react";
 import RecommendationsPage from "./page";
-import { renderWithProviders, mockNextNavigation } from "@/test/test-utils";
-
-// For components using next/navigation, ensure mocks are registered
-mockNextNavigation();
+import { renderWithProviders } from "@/test/test-utils";
 
 describe("Recommendations route", () => {
   it("renders header, filters, and cards grid (smoke)", () => {
