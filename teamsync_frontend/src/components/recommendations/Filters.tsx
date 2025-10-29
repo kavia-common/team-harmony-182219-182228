@@ -25,13 +25,27 @@ export default function Filters({ value, onChange }: Props) {
     onChange({ ...value, [key]: val });
   };
 
+  // Stable ids for a11y associations
+  const durationId = "filters-duration";
+  const energyId = "filters-energy";
+  const environmentId = "filters-environment";
+
   return (
     <Card className="bg-gradient-to-r from-blue-500/10 to-gray-50 border border-blue-100">
       <div className="py-4 px-4">
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <div className="flex flex-col">
-            <label className="text-sm font-medium text-gray-700 mb-1">Duration</label>
+            <label
+              className="text-sm font-medium text-gray-700 mb-1"
+              htmlFor={durationId}
+              id={`${durationId}-label`}
+            >
+              Duration
+            </label>
             <Select
+              id={durationId}
+              name="duration"
+              aria-labelledby={`${durationId}-label`}
               value={value.duration}
               onChange={(e) => setField("duration", e.target.value as FiltersState["duration"])}
             >
@@ -43,8 +57,17 @@ export default function Filters({ value, onChange }: Props) {
           </div>
 
           <div className="flex flex-col">
-            <label className="text-sm font-medium text-gray-700 mb-1">Energy Level</label>
+            <label
+              className="text-sm font-medium text-gray-700 mb-1"
+              htmlFor={energyId}
+              id={`${energyId}-label`}
+            >
+              Energy Level
+            </label>
             <Select
+              id={energyId}
+              name="energy"
+              aria-labelledby={`${energyId}-label`}
               value={value.energy}
               onChange={(e) => setField("energy", e.target.value as FiltersState["energy"])}
             >
@@ -56,8 +79,17 @@ export default function Filters({ value, onChange }: Props) {
           </div>
 
           <div className="flex flex-col">
-            <label className="text-sm font-medium text-gray-700 mb-1">Environment</label>
+            <label
+              className="text-sm font-medium text-gray-700 mb-1"
+              htmlFor={environmentId}
+              id={`${environmentId}-label`}
+            >
+              Environment
+            </label>
             <Select
+              id={environmentId}
+              name="environment"
+              aria-labelledby={`${environmentId}-label`}
               value={value.environment}
               onChange={(e) =>
                 setField("environment", e.target.value as FiltersState["environment"])
