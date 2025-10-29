@@ -22,17 +22,17 @@ export default function SavedList() {
 
   if (!saved || saved.length === 0) {
     return (
-      <div className="p-5 bg-white border border-gray-100 rounded-2xl shadow-sm">
+      <div className="p-6 ts-card bg-gradient-to-b from-blue-500/10 to-gray-50 border border-blue-100">
         <div className="text-center">
-          <div className="mx-auto w-12 h-12 rounded-full bg-gradient-to-br from-blue-500/10 to-gray-50 flex items-center justify-center mb-3">
-            <span className="text-[#2563EB] text-xl">★</span>
+          <div className="mx-auto w-12 h-12 rounded-xl bg-white shadow flex items-center justify-center border border-blue-100 mb-3">
+            <span className="text-[#2563EB] text-xl" aria-hidden>✨</span>
           </div>
           <h3 className="text-lg font-semibold text-[#111827]">No saved picks yet</h3>
           <p className="text-gray-600 mt-1">
             Explore recommendations and save your favorites for quick access.
           </p>
           <Link href="/recommendations" className="inline-block mt-4">
-            <Button className="bg-[#2563EB] hover:bg-blue-600 text-white">
+            <Button className="bg-[#2563EB] hover:bg-blue-600 text-white shadow-md">
               Discover activities
             </Button>
           </Link>

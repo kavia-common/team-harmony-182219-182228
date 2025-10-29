@@ -92,8 +92,25 @@ export default function RecommendationsPage() {
         </div>
 
         {filteredRecommendations.length === 0 && (
-          <div className="text-center text-gray-600 mt-12">
-            No activities match your filters. Try adjusting the filters above.
+          <div className="mt-10 p-8 ts-card text-center bg-gradient-to-b from-blue-500/10 to-gray-50 border border-blue-100">
+            <div className="mx-auto w-12 h-12 rounded-xl bg-white shadow flex items-center justify-center border border-blue-100">
+              <span aria-hidden className="text-[#2563EB] text-xl">🌊</span>
+            </div>
+            <h3 className="text-xl font-semibold text-[#111827] mt-3">No matches found</h3>
+            <p className="text-gray-600 mt-1">
+              Try adjusting your filters or explore all activities again.
+            </p>
+            <div className="mt-4 flex items-center justify-center gap-3">
+              <Button
+                variant="ghost"
+                onClick={() =>
+                  setFilters({ duration: "any", energy: "any", environment: "any" })
+                }
+              >
+                Reset filters
+              </Button>
+              <Button onClick={() => router.push("/dashboard")}>Go to dashboard</Button>
+            </div>
           </div>
         )}
       </div>
